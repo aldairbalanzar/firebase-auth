@@ -9,6 +9,7 @@ export function useAuth() {
 
 function AuthProvider({ children }) {
     const [currUser, setCurrUser] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     
     const register = (email, password) => {
@@ -18,6 +19,7 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const unsub = auth.onAuthStateChanged(user => {
             setCurrUser(user)
+            setIsLoading(false)
         })
         
         return unsub
@@ -30,7 +32,7 @@ function AuthProvider({ children }) {
     
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!isLoading && children}
         </AuthContext.Provider>
     )
 }
