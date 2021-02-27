@@ -6,7 +6,7 @@ function Register() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { register } = useAuth()
+    const { register, currUser } = useAuth()
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
@@ -29,6 +29,8 @@ function Register() {
         }
     }
 
+    console.log(currUser)
+
     return (
         <>
             {error && <Alert variant='danger'>{error}</Alert>}
@@ -36,6 +38,7 @@ function Register() {
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Register</h2>
+                    <h4>{currUser ? currUser.email : ''}</h4>
                     <Form onSubmit={handleSubmit}>
 
                         <Form.Group id='email'>
