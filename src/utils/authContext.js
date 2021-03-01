@@ -15,6 +15,10 @@ function AuthProvider({ children }) {
     const register = (email, password) => {
         auth.createUserWithEmailAndPassword(email, password)
     }
+
+    const login = (email, password) => {
+        auth.signInWithEmailAndPassword(email, password)
+    }
     
     useEffect(() => {
         const unsub = auth.onAuthStateChanged(user => {
@@ -27,7 +31,8 @@ function AuthProvider({ children }) {
     
     const value = {
         currUser,
-        register
+        register,
+        login
     }
     
     return (
