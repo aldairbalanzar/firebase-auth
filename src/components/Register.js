@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../utils/authContext';
+import { Link, useHistory } from 'react-router-dom';
 
 function Register() {
     const emailRef = useRef()
@@ -9,6 +10,7 @@ function Register() {
     const { register, currUser } = useAuth()
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const history = useHistory()
 
     const handleSubmit = async (e) => {
         let email = emailRef.current.value
@@ -22,7 +24,8 @@ function Register() {
 
         try {
             setIsLoading(true)
-            register(email, password)
+            await register(email, password)
+            history.push('/')
         } catch {
             setIsLoading(false)
             setError('Failed to register...')
@@ -58,7 +61,9 @@ function Register() {
                     </Form>
                 </Card.Body>
             </Card>
-            <div>Already have an account? Log In</div>
+            <div>
+                <Link to='/login'>Already have an account? Log In</Link>
+            </div>
         </>
     )
 }
