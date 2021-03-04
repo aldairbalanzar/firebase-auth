@@ -1,11 +1,12 @@
 import './App.css';
 import { Container } from 'react-bootstrap';
+import PrivateRoute from './components/PrivateRoute';
 import Register from './components/Register';
 import Login from './components/Login';
+import ForgotPassword from './components/ForgotPassword';
 import Dashboard from './components/Dashboard';
 import AuthProvider from './utils/authContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <PrivateRoute exact path='/' component={Dashboard} />
                 <Route path='/register' component={Register} />
                 <Route path='/login' component={Login} />
+                <Route path='/forgot-password' component={ForgotPassword} />
               </Switch>
             </AuthProvider>
           </Router>

@@ -7,12 +7,12 @@ function Register() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { register, currUser } = useAuth()
+    const { register } = useAuth()
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e){
         let email = emailRef.current.value
         let password = passwordRef.current.value
         let passwordConfirm = passwordConfirmRef.current.value
@@ -27,12 +27,11 @@ function Register() {
             await register(email, password)
             history.push('/')
         } catch {
-            setIsLoading(false)
             setError('Failed to register...')
         }
-    }
 
-    console.log(currUser)
+        setIsLoading(false)
+    }
 
     return (
         <>
@@ -41,7 +40,6 @@ function Register() {
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Register</h2>
-                    <h4>{currUser ? currUser.email : ''}</h4>
                     <Form onSubmit={handleSubmit}>
 
                         <Form.Group id='email'>
