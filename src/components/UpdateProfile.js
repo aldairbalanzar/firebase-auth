@@ -3,16 +3,16 @@ import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../utils/authContext';
 import { Link, useHistory } from 'react-router-dom';
 
-function Register() {
+function UpdateProfile() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { register } = useAuth()
+    const { currUser, updateEmail, updatePassword } = useAuth()
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
-    async function handleSubmit(e){
+    async function handleSubmit(e) {
         let email = emailRef.current.value
         let password = passwordRef.current.value
         let passwordConfirm = passwordConfirmRef.current.value
@@ -22,17 +22,7 @@ function Register() {
             return setError('Passwords do not match...')
         }
 
-        try {
-            setError('')
-            setIsLoading(true)
-            await register(email, password)
-            history.push('/')
-        } catch {
-            setError('Failed to register...')
-            console.log('error-register: ', error)
-        }
 
-        setIsLoading(false)
     }
 
     return (
@@ -41,31 +31,35 @@ function Register() {
 
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Register</h2>
+                    <h2 className="text-center mb-4">Update Profile</h2>
                     <Form onSubmit={handleSubmit}>
 
                         <Form.Group id='email'>
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type='email' ref={emailRef}/>
+                            <Form.Control type='email' ref={emailRef}
+                            defaultValue={currUser.email}/>
                         </Form.Group>
                         <Form.Group id='password'>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type='password' ref={passwordRef} required/>
+                            <Form.Control type='password' ref={passwordRef}
+                            placeholder='leave blank to leave the same'/>
                         </Form.Group>
                         <Form.Group id='password-confirm'>
                             <Form.Label>Password Confirmation</Form.Label>
-                            <Form.Control type='password' ref={passwordConfirmRef} required/>
+                            <Form.Control type='password' ref={passwordConfirmRef}
+                            placeholder='leave blank to leave the same'/>
                         </Form.Group>
 
-                        <Button disabled={isLoading} className='w-100 text-center mt-2' type='submit'>Register</Button>
+                        <Button disabled={isLoading} className='w-100 text-center mt-2' type='submit'>Update</Button>
                     </Form>
                 </Card.Body>
             </Card>
             <div>
-                <Link to='/login'>Already have an account? Log In</Link>
+                <Link to='/'>Cancel</Link>
             </div>
         </>
     )
 }
 
-export default Register
+export default UpdateProfile
+
