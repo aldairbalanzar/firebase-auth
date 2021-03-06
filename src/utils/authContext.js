@@ -13,15 +13,27 @@ function AuthProvider({ children }) {
 
     
     const register = (email, password) => {
-        auth.createUserWithEmailAndPassword(email, password)
+       return  auth.createUserWithEmailAndPassword(email, password)
     }
 
     const login = (email, password) => {
-        auth.signInWithEmailAndPassword(email, password)
+        return auth.signInWithEmailAndPassword(email, password)
     }
 
     const logout = () => {
         return auth.signOut()
+    }
+
+    const resetPassword = (email) => {
+       return  auth.sendPasswordResetEmail(email)
+    }
+
+    const updateEmail = (email) => {
+       return currUser.updateEmail(email)
+    }
+
+    const updatePassword = (password) => {
+       return currUser.updatePassword(password)
     }
     
     useEffect(() => {
@@ -37,7 +49,10 @@ function AuthProvider({ children }) {
         currUser,
         register,
         login,
-        logout
+        logout,
+        resetPassword,
+        updateEmail,
+        updatePassword
     }
     
     return (

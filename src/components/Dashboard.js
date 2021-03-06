@@ -13,7 +13,7 @@ function Dashboard() {
 
         try {
             await logout()
-            history.pushState('/login')
+            history.push('/login')
         } catch {
             setError('Failed to log out...')
         }
@@ -26,7 +26,7 @@ function Dashboard() {
                     <h2 className='text-center mb-4'>Profile</h2>
                     {error &&  <Alert variant='danger'>{error}</Alert>}
                     <strong>Email:</strong> {currUser.email}
-                    <Link link='/update-profile' className='btn btn-primary w-100 mt-3'>
+                    <Link to='/update-profile' className='btn btn-primary w-100 mt-3'>
                         Update Profile
                     </Link>
                 </Card.Body>
