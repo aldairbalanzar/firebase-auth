@@ -12,7 +12,7 @@ function UpdateProfile() {
     const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         let email = emailRef.current.value
         let password = passwordRef.current.value
         let passwordConfirm = passwordConfirmRef.current.value
@@ -22,7 +22,28 @@ function UpdateProfile() {
             return setError('Passwords do not match...')
         }
 
+        let promises = []
+        setIsLoading(true)
+        setError('')
 
+        if( email !== currUser.email) {
+            promises.push(updateEmail(email))
+        }
+
+        if(password) {
+            promises.push(updatePassword(password))
+        }
+
+        Promise.all(promises)
+        .then(() => {
+            history.push('/')
+        })
+        .catch(() => {
+            setError('Failed to update account...')
+        })
+        .finally(() => {
+            setIsLoading(false)
+        })
     }
 
     return (
